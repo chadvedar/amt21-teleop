@@ -1,0 +1,16 @@
+{
+  "configurations": [
+      {
+          "name": "ROS-Simple",
+          "includePath": [
+              "${workspaceFolder}/**",
+              "/opt/ros/noetic/include/",
+              "/usr/include/c++/9/" 
+          ],
+          "compilerPath": "/usr/bin/g++-9",
+          "cppStandard": "c++17",
+          "intelliSenseMode": "gcc-x64"
+      }
+  ],
+  "version": 4
+}

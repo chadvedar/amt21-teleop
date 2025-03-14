@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<launch>
+
+    <rosparam command="load" file="$(find teleop-exo-suit)/config/exo_suit.yaml" />
+    <node name="bringup" pkg="teleop-exo-suit" type="read_amt21" output='screen'/>
+
+</launch>
