@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- <param name="robot_description" command="cat $(find human_joint_ik)/model/h1model.urdf" /> -->
+    <!-- <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" /> -->
+
+    <node name="robot_tf_publisher" pkg="teleop-exo-suit" type="boardcast_robot_tf.py" output='screen'/>
+
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find teleop-exo-suit)/rviz/rviz_config.rviz" />
+
+</launch>
