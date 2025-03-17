@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>teleop-exo-suit</name>
+  <name>teleop_exo_suit</name>
   <version>0.0.0</version>
   <description>The teleop-exo-suit package</description>
 

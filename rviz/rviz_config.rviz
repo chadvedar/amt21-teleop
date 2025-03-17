@@ -6,6 +6,8 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
+        - /TF1
+        - /TF1/Frames1
       Splitter Ratio: 0.5
     Tree Height: 719
   - Class: rviz/Selection
@@ -57,30 +59,46 @@ Visualization Manager:
       Filter (whitelist): ""
       Frame Timeout: 15
       Frames:
-        All Enabled: true
+        All Enabled: false
+        elbow:
+          Value: true
         fix1:
-          Value: true
+          Value: false
+        fix1.1:
+          Value: false
         fix2:
-          Value: true
+          Value: false
+        fix2.1:
+          Value: false
         fix3:
-          Value: true
+          Value: false
+        fix3.1:
+          Value: false
+        fix3.2:
+          Value: false
         fix4:
-          Value: true
+          Value: false
         fix5:
-          Value: true
+          Value: false
+        fix5.1:
+          Value: false
         fix6:
-          Value: true
-        fix7:
-          Value: true
-        joint1:
-          Value: true
-        joint2:
-          Value: true
-        joint3:
-          Value: true
-        joint4:
+          Value: false
+        hand:
           Value: true
         map:
+          Value: true
+        shoulder_x:
+          Value: true
+        shoulder_y:
+          Value: true
+        shoulder_z:
+          Value: true
+        wrist_x:
+          Value: true
+        wrist_y:
+          Value: true
+        wrist_z:
           Value: true
       Marker Alpha: 1
       Marker Scale: 1
@@ -91,19 +109,68 @@ Visualization Manager:
       Tree:
         map:
           fix1:
-            joint1:
-              fix2:
-                fix3:
-                  joint2:
-                    fix4:
-                      fix5:
-                        joint3:
-                          fix6:
-                            fix7:
-                              joint4:
-                                {}
+            fix1.1:
+              shoulder_x:
+                fix2:
+                  fix2.1:
+                    shoulder_y:
+                      fix3:
+                        fix3.1:
+                          shoulder_z:
+                            fix3.2:
+                              elbow:
+                                fix4:
+                                  wrist_z:
+                                    fix5.1:
+                                      wrist_x:
+                                        fix5:
+                                          fix6:
+                                            wrist_y:
+                                              hand:
+                                                {}
       Update Interval: 0
       Value: true
+    - Alpha: 1
+      Class: rviz/RobotModel
+      Collision Enabled: false
+      Enabled: true
+      Links:
+        All Links Enabled: true
+        Expand Joint Details: false
+        Expand Link Details: false
+        Expand Tree: false
+        Link Tree Style: Links in Alphabetic Order
+        elbow:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        fix1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hand:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        shoulder_z:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        wrist_y:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+      Name: RobotModel
+      Robot Description: robot_description
+      TF Prefix: ""
+      Update Interval: 0
+      Value: true
+      Visual Enabled: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -132,7 +199,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 1.9479875564575195
+      Distance: 0.9851875305175781
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -148,9 +215,9 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.8453986048698425
+      Pitch: 0.17039920389652252
       Target Frame: <Fixed Frame>
-      Yaw: 6.118582725524902
+      Yaw: 1.3503972291946411
     Saved: ~
 Window Geometry:
   Displays:

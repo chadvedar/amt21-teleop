@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<robot name="humand_arm">
+    <link name="fix1">
+        <visual>
+            <geometry>
+                <cylinder length="0.1" radius="0.05"/>
+            </geometry>
+
+            <origin rpy="0 1.570796 0" xyz="0.05 0 0"/>
+
+            <material name="red">
+                <color rgba="1 0 0 1"/>
+            </material>
+
+        </visual>
+    </link>
+
+    <link name="shoulder_z">
+        <visual>
+            <geometry>
+                <cylinder length="0.20" radius="0.05"/>
+            </geometry>
+
+            <origin rpy="0 0 0" xyz="0 0 -0.1"/>
+
+            <material name="red">
+                <color rgba="1 0 0 1"/>
+            </material>
+
+        </visual>
+    </link>
+
+    <link name="elbow">
+        <visual>
+            <geometry>
+                <cylinder length="0.20" radius="0.05"/>
+            </geometry>
+
+            <origin rpy="1.570796 0 0" xyz="0 -0.10 0"/>
+
+            <material name="red">
+                <color rgba="1 0 0 1"/>
+            </material>
+
+        </visual>
+    </link>
+
+    <link name="wrist_y">
+        <visual>
+            <geometry>
+                <cylinder length="0.07" radius="0.05"/>
+            </geometry>
+
+            <origin rpy="0 1.570796 0" xyz="0.035 0 0"/>
+
+            <material name="red">
+                <color rgba="1 0 0 1"/>
+            </material>
+
+        </visual>
+    </link>
+
+    <link name="hand">
+        <visual>
+            <geometry>
+                <sphere radius="0.06"/>
+            </geometry>
+
+            <origin rpy="0 0 0" xyz="0 0 0.0"/>
+
+            <material name="red">
+                <color rgba="1 0 0 1"/>
+            </material>
+
+        </visual>
+    </link>
+
+    <joint name="fix1_shoulder" type="fixed">
+        <parent link="fix1"/>
+        <child link="shoulder_z"/>
+        <origin rpy="0 0 0" xyz="0 0 0.1"/>
+    </joint>
+
+    <joint name="shoulder_elbow" type="fixed">
+        <parent link="shoulder_z"/>
+        <child link="elbow"/>
+        <origin rpy="0 0 0" xyz="0 0 0.2"/>
+    </joint>
+
+    <joint name="elbow_wrist" type="fixed">
+        <parent link="elbow"/>
+        <child link="wrist_y"/>
+        <origin rpy="0 0 0" xyz="0 0 0.2"/>
+    </joint>
+    
+    <joint name="wrist_hand" type="fixed">
+        <parent link="wrist_y"/>
+        <child link="hand"/>
+        <origin rpy="0 0 0" xyz="0 0 0.07"/>
+    </joint>
+
+</robot>
