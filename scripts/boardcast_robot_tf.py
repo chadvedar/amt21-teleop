@@ -14,7 +14,8 @@ from JointState import get_joint_pos_base
 from teleop_exo_suit.cfg import joint_framesConfig
 
 def update_jointangle(joint_frames:Dict, num_joint:int, angle:float):
-    joint_frames[num_joint].orientation[2] = angle * pi / 180.0
+    # joint_frames[num_joint].orientation[2] = angle * pi / 180.0
+    joint_frames[num_joint].orientation[2] = angle 
 
 def update_jointframe_callback(config, joint_frames:Dict):
     th_s = [config['theta1'], 
@@ -74,30 +75,33 @@ def publish_joint_state(
 
     publisher.publish( joint_state )
 
-def init_robot_joint_frames() -> Dict:
+def init_robot_joint_frames(name:str = '') -> Dict:
     joint_frames : dict = dict()
 
     J_ANGLE  = [0.0 for _ in range(7)]
     J_OFFSET = [0.1, 0.20, 0.20, 0.07]
-    J_TABLE  = [ [ 0.0,         0.0,    0.0,         0.0,   '/map',        '/fix1',       -1 ],
-                 [ 0.0,         pi/2,   0.0,         0.0,   '/fix1',       '/fix1.1',   -1.1 ],
-                 [ J_ANGLE[0],  0.0,    0.0, J_OFFSET[0],   '/fix1.1',     '/shoulder_x',  1 ],
-                 [ pi/2,        0.0,    0.0,         0.0,   '/shoulder_x', '/fix2',       -2 ],
-                 [ 0.0,         pi/2,   0.0,         0.0,   '/fix2',       '/fix2.1',   -2.1 ],
-                 [ J_ANGLE[1],  0.0,    0.0,         0.0,   '/fix2.1',     '/shoulder_y',  2 ],
-                 [ pi/2,        0.0,    0.0,         0.0,   '/shoulder_y', '/fix3',       -3 ],
-                 [ 0.0,         pi/2,   0.0,         0.0,   '/fix3',       '/fix3.1',   -3.1 ],
-                 [ J_ANGLE[2],  0.0,    0.0,         0.0,   '/fix3.1',     '/shoulder_z',  3 ],
-                 [ 0.0,         pi/2,   0.0,         0.0,   '/shoulder_z', '/fix3.2',   -3.2 ],
-                 [ J_ANGLE[3],  0.0,  -J_OFFSET[1],  0.0,   '/fix3.2',     '/elbow',       4 ],
-                 [ 0.0,         pi/2,   0.0,         0.0,   '/elbow',      '/fix4',       -5 ],
-                 [ J_ANGLE[4],  0.0,   J_OFFSET[2],  0.0,   '/fix4',       '/wrist_z',     5 ],
-                 [ 0.0,         pi/2,   0.0,         0.0,   '/wrist_z',    '/fix5.1',   -5.1 ],
-                 [ J_ANGLE[5],  0.0,    0.0,         0.0,   '/fix5.1',     '/wrist_x',     6 ], 
-                 [ pi/2,        0.0,    0.0,         0.0,   '/wrist_x',    '/fix5',       -6 ],
-                 [ 0.0,         pi/2,   0.0,         0.0,   '/fix5',       '/fix6',     -6.1 ],
-                 [ J_ANGLE[6],  0.0,    0.0,         0.0,   '/fix6',       '/wrist_y',     7 ],
-                 [ 0.0,         0.0,    0.0, J_OFFSET[3],   '/wrist_y',    '/hand',       -7 ]]
+    J_TABLE  = [ [ 0.0,         0.0,    0.0,          1.0,   '/map',                f'/{name}/orgin',      -1 ],
+                 [ 0.0,         pi/2,   0.0,  J_OFFSET[0],   f'/{name}/orgin',      f'/{name}/fix1',      -14 ],
+                 [ J_ANGLE[0],  0.0,    0.0,          0.0,   f'/{name}/fix1',       f'/{name}/shoulder_y',  1 ],
+                 [ pi/2,        0.0,    0.0,          0.0,   f'/{name}/shoulder_y', f'/{name}/fix2',       -2 ],
+                 [ 0.0,         pi/2,   0.0,          0.0,   f'/{name}/fix2',       f'/{name}/fix3',       -3 ],
+                 [ J_ANGLE[1],  0.0,    0.0,          0.0,   f'/{name}/fix3',       f'/{name}/shoulder_x',  2 ],
+                 [ pi/2,        0.0,    0.0,          0.0,   f'/{name}/shoulder_x', f'/{name}/fix4',       -4 ],
+                 [ 0.0,        -pi/2,   0.0,          0.0,   f'/{name}/fix4',       f'/{name}/fix5',       -5 ],
+                 [ J_ANGLE[2],  0.0,    0.0,          0.0,   f'/{name}/fix5',       f'/{name}/shoulder_z',  3 ],
+                 [ 0.0,         pi/2,   J_OFFSET[1],  0.0,   f'/{name}/shoulder_z', f'/{name}/fix6',       -6 ],
+                 [ J_ANGLE[3],  0.0,    0.0,          0.0,   f'/{name}/fix6',       f'/{name}/elbow',       4 ],
+                 [ pi/2,        0.0,    0.0,  J_OFFSET[2],   f'/{name}/elbow',      f'/{name}/fix7',       -7 ],
+                 [ 0.0,         pi/2,   0.0,          0.0,   f'/{name}/fix7',       f'/{name}/fix8',       -8 ],
+                 [ J_ANGLE[4],  0.0,    0.0,          0.0,   f'/{name}/fix8',       f'/{name}/wrist_y',     5 ],
+                 [ pi/2,        0.0,    0.0,          0.0,   f'/{name}/wrist_y',    f'/{name}/fix9',       -9 ],
+                 [ 0.0,         pi/2,   0.0,          0.0,   f'/{name}/fix9',       f'/{name}/fix10',     -10 ],
+                 [ J_ANGLE[5],  0.0,    0.0,          0.0,   f'/{name}/fix10',      f'/{name}/wrist_z',     6 ],
+                 [ pi/2,        0.0,    0.0,          0.0,   f'/{name}/wrist_z',    f'/{name}/fix11',     -11 ],
+                 [ 0.0,         pi/2,   0.0,          0.0,   f'/{name}/fix11',      f'/{name}/fix12',     -12 ],
+                 [ J_ANGLE[6],  0.0,    0.0,          0.0,   f'/{name}/fix12',      f'/{name}/wrist_x',     7 ],
+                 [ 0.0,         0.0,    0.0,  J_OFFSET[3],   f'/{name}/wrist_x',    f'/{name}/hand',      -13 ],               
+                 ]
 
     for joint in J_TABLE:
         joint_frame : JointFrame = JointFrame(
@@ -114,9 +118,13 @@ if __name__ == "__main__":
     rospy.init_node('robot_bringup')
     joint_state_pub = rospy.Publisher('/joint_states', JointState, queue_size=10)
 
-    rate = rospy.Rate(1000.0)
+    tf_prefix : str = ''
+    if rospy.has_param('/exo_suit/name'):
+        tf_prefix = rospy.get_param('/exo_suit/name')
 
-    joint_frames : Dict = init_robot_joint_frames()
+    rate = rospy.Rate(100.0)
+
+    joint_frames : Dict = init_robot_joint_frames(name = tf_prefix)
     bds = [tf.TransformBroadcaster() for _ in range(len(joint_frames))]
 
     jointframes_server = Server(joint_framesConfig, 
@@ -151,7 +159,8 @@ if __name__ == "__main__":
             publisher         = joint_state_pub,
             joint_frames      = joint_frames,
             joint_frames_prev = joint_frames_prev,
-            dt                = dt
+            dt                = dt,
+            parent_frame      = f'/{tf_prefix}/orgin'
         )
 
         joint_frames_prev = deepcopy(joint_frames)

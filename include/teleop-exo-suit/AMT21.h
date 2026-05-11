@@ -1,7 +1,7 @@
 #ifndef _AMT21
 #define _AMT21
 
-#define ENC_SCALE 0.00038349519
+#define ENC_SCALE 0.02197399744
 
 #include "teleop-exo-suit/Serial.h"
 
@@ -55,22 +55,24 @@ uint8_t* AMT21::read_raw_position(uint16_t timeout){
     
     if(!this->is_checksum(data_recv.data_recv)) 
         return nullptr; 
-
+    
     uint8_t* position  = (uint8_t*)calloc(data_recv.bytes_read, sizeof(*position));
     if (position == nullptr) {
         return nullptr;
     }
 
-    position[0] = data_recv.data_recv[1] & 0x3F;
-    position[1] = data_recv.data_recv[0];
+    position[1] = data_recv.data_recv[1] & 0x3F;
+    position[0] = data_recv.data_recv[0];
 
     return position;
 }
 
 float AMT21::read_position(uint16_t timeout){
     uint8_t* raw_position = this->read_raw_position(timeout);
+
+    if(raw_position == nullptr) return NULL;
+
     float position = (*(uint16_t*)(raw_position)) * ENC_SCALE;
-    
     free(raw_position);
 
     return position; 

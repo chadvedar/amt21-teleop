@@ -11,7 +11,8 @@
         <remap from="joint_states" to="exo_joint_states" />
     </node>
 
-    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find teleop_exo_suit)/rviz/rviz_config.rviz" />
-    <!-- <node name='jointstate_reconfig' pkg='rqt_reconfigure' type='rqt_reconfigure'/> -->
+    <rosparam command="load" file="$(find teleop_exo_suit)/config/exo_suit.yaml" />
+    <node name="bringup_exo" pkg="teleop_exo_suit" type="read_amt21"/>
+    <node name="motion_tracker" pkg="teleop_exo_suit" type="motion_tracking_sim.py" output='screen'/>
 
 </launch>

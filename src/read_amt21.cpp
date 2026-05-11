@@ -1,14 +1,14 @@
 #include <ros/ros.h>
 #include <std_msgs/Float32MultiArray.h>
 
+#include "teleop_exo_suit/setZero.h"
 #include "teleop-exo-suit/AMT21.h"
 
 void read_device_positions(AMT21& device, uint8_t* addrs, float* storage, int num_addrs){
     for(int i=0; i<num_addrs; ++i){
-        ROS_INFO("iterate %d", i);
+        // ROS_INFO("iterate %d", i);
         device.set_address( addrs[i] );
-        // storage[i] = device.read_position();
-        storage[i] = i;
+        storage[i] = device.read_position();
         ROS_INFO("iterate storage val %f", storage[i] );
     }
 }
@@ -22,6 +22,17 @@ void publish_device_position(ros::Publisher& publisher, float* storage, int num_
     }
     publisher.publish(data);
 
+}
+
+bool set_zero(
+        AMT21                              &device,
+        uint8_t*                            addrs,
+        teleop_exo_suit::setZero::Request  &req,
+        teleop_exo_suit::setZero::Response &res){
+    device.set_address( addrs[ req.id ] );
+    device.set_zero();
+    res.ret = true;
+    return true;
 }
 
 int main(int argc, char** argv){
@@ -45,12 +56,22 @@ int main(int argc, char** argv){
         list_device_addrs[i] = (uint8_t)addrs;
         ROS_INFO("device addr [%d] %d", i, addrs);
     }
-    
-    AMT21 amt21("/dev/ttyACM0",
-        115200,
+
+    AMT21 amt21("/dev/ttyUSB0",
+        2000000,
         list_device_addrs[0]
     );
     amt21.init();
+
+    ros::ServiceServer set_zero_servicer = nh.advertiseService(
+        "/amt21/set_zero", 
+        boost::function<bool(teleop_exo_suit::setZero::Request&, teleop_exo_suit::setZero::Response&)>(
+            [&amt21, &list_device_addrs](teleop_exo_suit::setZero::Request &req,
+                                         teleop_exo_suit::setZero::Response &res) {
+                return set_zero(amt21, list_device_addrs, req, res);
+            }
+        )
+    );
 
     if(amt21.isConnect){
         while(ros::ok()){

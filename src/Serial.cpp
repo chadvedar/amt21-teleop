@@ -24,9 +24,10 @@ void Serial::init(){
 }
 
 void Serial::write(uint8_t* data_send, size_t data_size){
+    mtx.lock();
     system::error_code error;
     asio::write(*this->serial, asio::buffer(data_send, data_size), error);
-
+    mtx.unlock();
 }
 
 DataRecv Serial::recv(){

@@ -27,6 +27,7 @@ class Serial{
         bool isConnect = false;
 
     private:
+        std::mutex mtx;
         asio::io_context io;
         std::unique_ptr<asio::serial_port> serial;
         std::unique_ptr<asio::steady_timer > timer_;
