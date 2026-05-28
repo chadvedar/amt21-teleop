@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+    <include file="$(find teleop_exo_suit)/launch/tf_publisher.launch" />
+    <include file="$(find g1_kinematic)/launch/linear_control.launch" />
+
+    <rosparam command="load" file="$(find teleop_exo_suit)/config/exo_suit.yaml" />
+    <node name="bringup_exo" pkg="teleop_exo_suit" type="read_amt21"/>
+    <node name="motion_tracker" pkg="teleop_exo_suit" type="motion_tracking_7dof.py" output='screen'/>
+
+</launch>

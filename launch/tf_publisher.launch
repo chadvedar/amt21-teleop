@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 <launch>
+    <arg name="is_rviz" default="true"/> 
+
     <param name="exo_description" command="xacro $(find teleop_exo_suit)/config/humanoid_arm.urdf" />
     <node name="exo_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" >
         <remap from="robot_description" to="exo_description"/>
@@ -11,7 +13,7 @@
         <remap from="joint_states" to="exo_joint_states" />
     </node>
 
-    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find teleop_exo_suit)/rviz/rviz_config.rviz" />
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find teleop_exo_suit)/rviz/rviz_config.rviz" if="$(arg is_rviz)"/>
     <!-- <node name='jointstate_reconfig' pkg='rqt_reconfigure' type='rqt_reconfigure'/> -->
 
 </launch>
